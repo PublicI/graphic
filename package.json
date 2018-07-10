@@ -1,0 +1,41 @@
+{
+    "name": "graphic",
+    "version": "0.1.0",
+    "description": "",
+    "author": "Chris Zubak-Skees <chriszs@gmail.com>",
+    "private": true,
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt",
+        "generate": "nuxt generate",
+        "heroku-postbuild": "npm run build",
+        "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+        "precommit": "yarn lint",
+        "push": "s3-deploy './dist/**' --cwd './dist/' --bucket apps.publicintegrity.org --gzip --filePrefix $npm_package_name --cache 120",
+        "start": "nuxt start"
+    },
+    "dependencies": {
+        "@nuxtjs/axios": "^4.5.0",
+        "@nuxtjs/google-analytics": "^2.0.2",
+        "dsv-loader": "^2.0.0",
+        "less-loader": "^4.1.0",
+        "nuxt": "^1.4.0",
+        "pym.js": "^1.3.2",
+        "source-map-support": "^0.4.15",
+        "stylus": "^0.54.5",
+        "stylus-loader": "^3.0.2",
+        "vuetify": "^1.1.4"
+    },
+    "devDependencies": {
+        "babel-eslint": "^7.2.3",
+        "eslint": "^4.3.0",
+        "eslint-config-standard": "^10.2.1",
+        "eslint-loader": "^1.9.0",
+        "eslint-plugin-html": "^3.1.1",
+        "eslint-plugin-import": "^2.7.0",
+        "eslint-plugin-node": "^5.1.1",
+        "eslint-plugin-promise": "^3.5.0",
+        "eslint-plugin-standard": "^3.0.1",
+        "s3-deploy": "^1.1.0"
+    }
+}
