@@ -10,7 +10,7 @@
       <v-stepper v-model="e6" vertical>
         <v-stepper-step editable :complete="e6 > 1" step="1">
           Add your data
-          <!-- <small>TK records (un)sucessfully parsed</small> -->
+          <small v-if="data.length > 0">{{data.length}} rows parsed</small>
         </v-stepper-step>
 
         <v-stepper-content step="1">
@@ -21,7 +21,7 @@
         <v-stepper-step editable :complete="e6 > 2" step="2">Choose the graphic type</v-stepper-step>
 
         <v-stepper-content step="2">
-          <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+          <chooser />
           <v-btn color="primary" @click="e6 = 3">Continue</v-btn>
           <v-btn flat>Cancel</v-btn>
         </v-stepper-content>
@@ -49,6 +49,7 @@
 <script>
 import Logo from '~/components/Logo.vue';
 import Parser from '~/components/Parser.vue';
+import Chooser from '~/components/Chooser.vue';
 
 export default {
     data() {
@@ -58,7 +59,13 @@ export default {
     },
     components: {
         Logo,
-        Parser
+        Parser,
+        Chooser
+    },
+    computed: {
+        data() {
+            return this.$store.state.data;
+        }
     }
 };
 </script>

@@ -3,17 +3,17 @@
         <v-alert
           :value="true"
           type="error"
-          v-if="parseError !== null"
+          v-if="error !== null"
         >
-          Unable to parse data: {{parseError}}
+          Unable to parse data: {{error}}
         </v-alert>
 
         <v-alert
           :value="true"
           type="success"
-          v-if="parseSuccess !== null"
+          v-if="success !== null"
         >
-          Successfully parsed {{parseSuccess}} rows of data.
+          Successfully parsed {{success}} rows of data.
         </v-alert>
 
         <v-textarea
@@ -238,6 +238,18 @@ export default {
             parser.delimiter = delimiter;
 
             return parser;
+        },
+        parseData(data) {
+            let parser = this.parser();
+
+            try {
+                return parser(data);
+            } catch (e) {
+                return e;
+            }
+        },
+        setData(data) {
+            this.$store.commit('setData', this.parseData(data));
         }
     },
     data() {
@@ -247,19 +259,23 @@ export default {
     },
     computed: {
         parsedData() {
-            let parser = this.parser();
-
-            try {
-                return parser(this.parseableData);
-            } catch (e) {
-                return e;
-            }
+            return this.$store.state.data;
         },
-        parseError() {
-            return this.parsedData instanceof Error ? this.parsedData.message : null;
+        error() {
+            return this.parsedData instanceof Error
+                ? this.parsedData.message
+                : null;
         },
-        parseSuccess() {
-            return !(this.parsedData instanceof Error) && this.parsedData.length > 0 ? this.parsedData.length : null;
+        success() {
+            return !(this.parsedData instanceof Error) &&
+                this.parsedData.length > 0
+                ? this.parsedData.length
+                : null;
+        }
+    },
+    watch: {
+        parseableData(data) {
+            this.setData(data);
         }
     }
 };
