@@ -187,27 +187,30 @@ export default {
 
                 for (let i in header) {
                     character = header[i];
-                    switch (character) {
-                        case '"':
-                            if (quoted) {
-                                if (header[i + 1] !== '"') quoted = false;
-                                else i++;
-                            } else if (firstChar) quoted = true;
-                            break;
 
-                        default:
-                            if (quoted) {
-                                break;
-                            }
-                            let index = delimiters.indexOf(character);
-                            if (index !== -1) {
-                                delimitersCount[index]++;
-                                firstChar = true;
-                                continue;
-                            }
+                    switch (character) {
+                    case '"':
+                        if (quoted) {
+                            if (header[i + 1] !== '"') quoted = false;
+                            else i++;
+                        } else if (firstChar) quoted = true;
+                        break;
+
+                    default:
+                        if (quoted) {
                             break;
+                        }
+                        let index = delimiters.indexOf(character);
+                        if (index !== -1) {
+                            delimitersCount[index]++;
+                            firstChar = true;
+                            continue;
+                        }
+                        break;
                     }
-                    if (firstChar) firstChar = false;
+                    if (firstChar) {
+                        firstChar = false;
+                    }
                 }
 
                 let maxCount = d3.max(delimitersCount);
@@ -257,11 +260,6 @@ export default {
         },
         parseSuccess() {
             return !(this.parsedData instanceof Error) && this.parsedData.length > 0 ? this.parsedData.length : null;
-        }
-    },
-    watch: {
-        parsedData() {
-            console.log(this.parsedData);
         }
     }
 };
