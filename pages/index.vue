@@ -18,7 +18,7 @@
           <v-btn color="primary" @click="e6 = 2">Continue</v-btn>
         </v-stepper-content>
 
-        <v-stepper-step editable :complete="e6 > 2" step="2">Configure analytics for this app</v-stepper-step>
+        <v-stepper-step editable :complete="e6 > 2" step="2">Choose the graphic type</v-stepper-step>
 
         <v-stepper-content step="2">
           <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
@@ -26,7 +26,7 @@
           <v-btn flat>Cancel</v-btn>
         </v-stepper-content>
 
-        <v-stepper-step editable :complete="e6 > 3" step="3">Select an ad format and name ad unit</v-stepper-step>
+        <v-stepper-step editable :complete="e6 > 3" step="3">Configure graphic options</v-stepper-step>
 
         <v-stepper-content step="3">
           <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
@@ -34,7 +34,7 @@
           <v-btn flat>Cancel</v-btn>
         </v-stepper-content>
 
-        <v-stepper-step editable step="4">View setup instructions</v-stepper-step>
+        <v-stepper-step editable step="4">Embed the graphic</v-stepper-step>
         <v-stepper-content step="4">
           <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
           <v-btn color="primary" @click="e6 = 1">Continue</v-btn>
