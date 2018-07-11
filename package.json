@@ -17,6 +17,7 @@
     "dependencies": {
         "@nuxtjs/axios": "^4.5.0",
         "@nuxtjs/google-analytics": "^2.0.2",
+        "d3": "^5.5.0",
         "dsv-loader": "^2.0.0",
         "less-loader": "^4.1.0",
         "nuxt": "^1.4.0",

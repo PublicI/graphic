@@ -9,17 +9,12 @@
 
       <v-stepper v-model="e6" vertical>
         <v-stepper-step editable :complete="e6 > 1" step="1">
-          Select an app
-          <small>Summarize if needed</small>
+          Add your data
+          <!-- <small>TK records (un)sucessfully parsed</small> -->
         </v-stepper-step>
 
         <v-stepper-content step="1">
-            <v-textarea
-              outline
-              name="input-7-4"
-              label="Paste your data"
-              value=""
-            ></v-textarea>
+            <parser />
           <v-btn color="primary" @click="e6 = 2">Continue</v-btn>
         </v-stepper-content>
 
@@ -53,16 +48,17 @@
 
 <script>
 import Logo from '~/components/Logo.vue';
-import examples from '~/assets/examples.json';
+import Parser from '~/components/Parser.vue';
 
 export default {
     data() {
         return {
             e6: 1
-        }
+        };
     },
     components: {
-        Logo
+        Logo,
+        Parser
     }
 };
 </script>
