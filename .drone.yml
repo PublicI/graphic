@@ -15,6 +15,11 @@ pipeline:
       - yarn config set cache-folder .yarn-cache
       - yarn install --pure-lockfile
 
+  test:
+    image: node:8.11.3
+    commands:
+      - yarn test
+
   generate:
     image: node:8.11.3
     commands:
