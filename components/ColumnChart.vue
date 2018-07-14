@@ -12,23 +12,11 @@
 
 <script>
 import raceBrackets from '~/assets/cpshouseholdincome.csv';
-import taxBrackets from '~/assets/jcttaxcutsbyincomeovertime.csv';
 import { Chart } from 'highcharts-vue';
 import clone from 'lodash.clonedeep';
 
 export default {
     data() {
-        const chartTitles = {
-            'White alone Non Hispanic': 'White',
-            'Totals Hispanic': 'Hispanic',
-            'Black or African American alone Non Hispanic': 'Black',
-            'Asian alone Non Hispanic': 'Asian',
-            'Totals Totals': null,
-            'Totals Non Hispanic': null,
-            'American Indian and Alaska Native alone Non Hispanic': null,
-            'Native Hawaiian and Other Pacific Islander alone Non Hispanic': null,
-            'Two or more races Non Hispanic': null
-        };
         let chartOptions = {
             chart: {
                 type: 'column',
@@ -56,7 +44,7 @@ export default {
                 }
             },
             yAxis: {
-                tickInterval: 15,
+                // tickInterval: 15,
                 gridLineWidth: 1,
                 title: {
                     text: null
@@ -99,52 +87,36 @@ export default {
             }
             // series
         };
-        const raceCategories = Object.keys(raceBrackets[0])
-            .filter(cat => ['', 'Race', 'Hispanic origin'].indexOf(cat) === -1)
-            .map(cat => cat.replace(' pct', ''));
-        const raceSeries = raceBrackets
-            .map(row => {
-                return {
-                    name: chartTitles[`${row.Race} ${row['Hispanic origin']}`],
-                    data: raceCategories.map(cat => row[`${cat} pct`] * 100)
-                };
-            })
-            .filter(s => s.name);
-        raceSeries.splice(1, 0, raceSeries.shift());
-        let raceCharts = raceSeries.map(s => {
+
+        let categories = [
+            'Less than $10,000 pct',
+            '$10,000 to $20,000 pct',
+            '$20,000 to $30,000 pct',
+            '$30,000 to $40,000 pct',
+            '$40,000 to $50,000 pct',
+            '$50,000 to $75,000 pct',
+            '$75,000 to $100,000 pct',
+            '$100,000 and over pct'
+        ];
+
+        let raceCharts = raceBrackets.map(s => {
             let options = clone(chartOptions);
-            options.title.text = s.name;
-            options.series = [s];
-            options.xAxis.categories = raceCategories;
+            options.title.text = s.Race;
+            options.series = [
+                {
+                    data: categories.map(c => +s[c]),
+                    name: s.Race
+                }
+            ];
+            console.log(options.series);
+            options.xAxis.categories = categories;
             options.yAxis.min = 0;
-            options.yAxis.max = 43;
+            options.yAxis.max = 0.43;
             return options;
         });
-        const taxCategories = Object.keys(taxBrackets[0]).filter(
-            cat => ['Year'].indexOf(cat) === -1
-        );
-        const taxSeries = taxBrackets
-            .map(row => {
-                return {
-                    name: row.Year,
-                    data: taxCategories.map(cat => row[cat] * 100)
-                };
-            })
-            .filter(s => s.name !== '2018');
-        let taxCharts = taxSeries.map(s => {
-            let options = clone(chartOptions);
-            options.title.text = s.name;
-            options.series = [s];
-            options.xAxis.categories = taxCategories;
-            options.yAxis.min = -13;
-            options.yAxis.max = 13;
-            return options;
-        });
+
         return {
             groups: [
-                {
-                    charts: taxCharts
-                },
                 {
                     charts: raceCharts
                 }
@@ -163,8 +135,8 @@ export default {
     width: 300px;
 }
 .charts:after {
-  content: "";
-  display: table;
-  clear: both;
+    content: '';
+    display: table;
+    clear: both;
 }
 </style>
