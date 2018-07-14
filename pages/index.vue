@@ -29,7 +29,7 @@
         <v-stepper-step editable :complete="e6 > 3" step="3">Configure graphic options</v-stepper-step>
 
         <v-stepper-content step="3">
-          <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+          <column-chart />
           <v-btn color="primary" @click="e6 = 4">Continue</v-btn>
           <v-btn flat>Cancel</v-btn>
         </v-stepper-content>
@@ -50,6 +50,7 @@
 import Logo from '~/components/Logo.vue';
 import Parser from '~/components/Parser.vue';
 import Chooser from '~/components/Chooser.vue';
+import ColumnChart from '~/components/ColumnChart.vue';
 
 export default {
     data() {
@@ -60,7 +61,8 @@ export default {
     components: {
         Logo,
         Parser,
-        Chooser
+        Chooser,
+        ColumnChart
     },
     computed: {
         data() {
