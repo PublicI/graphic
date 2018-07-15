@@ -4,8 +4,9 @@
           <v-flex xs4 v-for="item in 3" :key="item">
               <v-card>
                 <v-card-media
-                  src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+                  src="img/columnchart.png"
                   height="150px"
+                  flat
                 ></v-card-media>
 
                 <v-card-title primary-title>
