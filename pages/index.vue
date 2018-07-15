@@ -15,15 +15,12 @@
 
         <v-stepper-content step="1">
             <parser />
-          <v-btn color="primary" @click="e6 = 2">Continue</v-btn>
         </v-stepper-content>
 
         <v-stepper-step editable :complete="e6 > 2" step="2">Choose the graphic type</v-stepper-step>
 
         <v-stepper-content step="2">
           <chooser />
-          <v-btn color="primary" @click="e6 = 3">Continue</v-btn>
-          <v-btn flat>Cancel</v-btn>
         </v-stepper-content>
 
         <v-stepper-step editable :complete="e6 > 3" step="3">Configure graphic options</v-stepper-step>
