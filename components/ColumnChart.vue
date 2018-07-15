@@ -1,11 +1,7 @@
 <template>
     <section class="charts">
-        <div v-for="group in groups" class="group">
-            <h2></h2>
-
-            <div v-for="chart in group.charts" class="chart">
-                <highcharts :options="chart"></highcharts>
-            </div>
+        <div v-for="chart in charts" class="chart">
+            <highcharts :options="chart"></highcharts>
         </div>
     </section>
 </template>
@@ -20,7 +16,7 @@ export default {
         let chartOptions = {
             chart: {
                 type: 'column',
-                height: 140,
+                // height: 140,
                 // paddingLeft: -10,
                 style: {
                     fontFamily: 'tablet-gothic-narrow'
@@ -71,9 +67,6 @@ export default {
                     // color: '#666'
                 }
             },
-            style: {
-                fontFamily: 'tablet-gothic-narrow'
-            },
             plotOptions: {
                 series: {
                     // pointWidth: 11,
@@ -99,7 +92,7 @@ export default {
             '$100,000 and over pct'
         ];
 
-        let raceCharts = raceBrackets.map(s => {
+        let charts = raceBrackets.map(s => {
             let options = clone(chartOptions);
             options.title.text = s.Race;
             options.series = [
@@ -108,7 +101,6 @@ export default {
                     name: s.Race
                 }
             ];
-            console.log(options.series);
             options.xAxis.categories = categories;
             options.yAxis.min = 0;
             options.yAxis.max = 0.43;
@@ -116,11 +108,7 @@ export default {
         });
 
         return {
-            groups: [
-                {
-                    charts: raceCharts
-                }
-            ]
+            charts
         };
     },
     components: {
@@ -130,13 +118,4 @@ export default {
 </script>
 
 <style scoped>
-.group {
-    float: left;
-    width: 300px;
-}
-.charts:after {
-    content: '';
-    display: table;
-    clear: both;
-}
 </style>
