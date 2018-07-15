@@ -29,6 +29,7 @@
         "source-map-support": "^0.4.15",
         "stylus": "^0.54.5",
         "stylus-loader": "^3.0.2",
+        "vuedraggable": "^2.16.0",
         "vuetify": "^1.1.4"
     },
     "devDependencies": {
