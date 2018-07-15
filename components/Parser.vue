@@ -21,6 +21,7 @@
           name="parseable-data"
           label="Paste data here"
           v-model="parseableData"
+          autofocus
         ></v-textarea>
     </div>
 
