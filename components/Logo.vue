@@ -10,7 +10,7 @@
                 <path class="cls-2" d="M34.55,36.46v8.36l6,1.87v6.55l6.31,2v65.46l9.59-4.64V60.19a2,2,0,0,1,2-2h.69a2,2,0,0,1,2,2V113.8l9.77-4.73V60.19a2,2,0,0,1,2-2h.7a2,2,0,0,1,2,2v48.88l9.77,4.73V60.19a2,2,0,0,1,2-2H88a2,2,0,0,1,2,2v55.87l9.6,4.64V55.25l6.3-2V46.69l6-1.87V36.46Z"/>
               </g>
             </g>
-            <g class="text" v-show="scrollY < 20">
+            <g class="text">
               <g>
                 <path class="cls-3" d="M176,120.77h-9.92v-56h19.46c14,0,18.4,7,18.4,16.49,0,7.87-2.83,18.93-21,18.93H176Zm6-28.17c7.93,0,11.83-3.21,11.83-10.68,0-6-2.59-9.31-10.23-9.31H176v20Z"/>
                 <path class="cls-3" d="M208.67,81.61h9.54v23.21c0,6.71,2.14,9.62,6.64,9.62,6.56,0,8.32-5.65,8.32-12V81.61h9.54v39.16h-8.62l-.46-5.81h-.08c-1.76,2.9-4.81,6.71-11.83,6.71-8.32,0-13.05-5-13.05-16.41Z"/>
@@ -49,27 +49,6 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'Logo',
-    data() {
-        return {
-            scrollY: 0
-        };
-    }
-/*, 
-    mounted() {
-        let self = this;
-
-        if (typeof window !== 'undefined' && window) {
-            window.addEventListener('scroll', (e) => {
-                self.scrollY = window.scrollY;
-            });
-        }
-    } */
-};
-</script>
-
 <style>
 .cls-1 {
     fill: red;
@@ -82,16 +61,6 @@ export default {
     fill: #323232;
 }
 .logo {
-    /*
-    width: 100%;
-    height: auto;
-    max-width: 280px;*/
-    /*
-    position: fixed;
-    position: absolute;
-    top: 50px;
-    left: 14.2%;
-    */
     padding: 10px;
     z-index: 300;
     width: 280px;
