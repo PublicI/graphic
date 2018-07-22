@@ -10,11 +10,11 @@
       <v-stepper v-model="e6" vertical>
         <v-stepper-step editable :complete="e6 > 1" step="1">
           Add your data
-          <small v-if="data.length > 0">{{data.length}} rows parsed</small>
+          <small>{{ rows.length > 0 ? rows.length + ' rows parsed' : '' }}</small>
         </v-stepper-step>
 
         <v-stepper-content step="1">
-            <parser />
+          <parser />
         </v-stepper-content>
 
         <v-stepper-step editable :complete="e6 > 2" step="2">Choose the graphic type</v-stepper-step>
@@ -26,7 +26,7 @@
         <v-stepper-step editable :complete="e6 > 3" step="3">Configure graphic options</v-stepper-step>
 
         <v-stepper-content step="3">
-          <component v-bind:is="type"></component>
+          <component v-bind:is="type" ref="graphic" @init="graphicInit" v-bind="graphicProps"></component>
           <v-btn color="primary" @click="e6 = 4">Continue</v-btn>
           <v-btn flat>Cancel</v-btn>
         </v-stepper-content>
@@ -53,7 +53,8 @@ import BarChart from '~/components/BarChart.vue';
 export default {
     data() {
         return {
-            e6: 1
+            e6: 1,
+            graphicProps: {}
         };
     },
     components: {
@@ -67,8 +68,27 @@ export default {
         type() {
             return this.$store.state.type;
         },
-        data() {
+        rows() {
             return this.$store.state.data;
+        }
+    },
+    methods: {
+        graphicInit(graphicProps) {
+            this.graphicProps = {
+                categories: [
+                    'Less than $10,000 pct',
+                    '$10,000 to $20,000 pct',
+                    '$20,000 to $30,000 pct',
+                    '$30,000 to $40,000 pct',
+                    '$40,000 to $50,000 pct',
+                    '$50,000 to $75,000 pct',
+                    '$75,000 to $100,000 pct',
+                    '$100,000 and over pct'
+                ],
+                rows: this.rows
+            };
+            console.log(this.graphicProps);
+            // console.log(wheee, this.$refs.graphic);
         }
     }
 };
