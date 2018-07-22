@@ -1,9 +1,13 @@
 export const state = () => ({
-    data: []
+    data: [],
+    type: 'column-chart'
 });
 
 export const mutations = {
     setData (state, value) {
         state.data = value;
+    },
+    setType (state, value) {
+        state.type = value;
     }
 };
