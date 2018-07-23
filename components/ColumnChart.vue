@@ -56,7 +56,11 @@ export default {
                     }
                 },
                 legend: {
-                    enabled: true
+                    enabled: true,
+                    itemHoverStyle: {
+                        color: '#333333',
+                        cursor: 'initial'
+                    }
                 },
                 tooltip: {
                     // enabled: false
@@ -77,6 +81,11 @@ export default {
                         stacking: null
                     },
                     series: {
+                        events: {
+                            legendItemClick() {
+                                return false;
+                            }
+                        },
                         // pointWidth: 11,
                         // color: '#3D7FA6',
                         states: {
