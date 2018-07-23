@@ -13,7 +13,8 @@ import clone from 'lodash.clonedeep';
 export default {
     props: [
         'categories',
-        'rows'
+        'rows',
+        'stacked'
     ],
     data() {
         return {
@@ -33,7 +34,7 @@ export default {
                         text: null
                     },
                     labels: {
-                        enabled: false,
+                        // enabled: false,
                         reserveSpace: true,
                         allowOverlap: true,
                         step: 1,
@@ -55,7 +56,7 @@ export default {
                     }
                 },
                 legend: {
-                    enabled: false
+                    enabled: true
                 },
                 tooltip: {
                     // enabled: false
@@ -72,9 +73,12 @@ export default {
                     }
                 },
                 plotOptions: {
+                    column: {
+                        stacking: null
+                    },
                     series: {
                         // pointWidth: 11,
-                        color: '#3D7FA6',
+                        // color: '#3D7FA6',
                         states: {
                             hover: {
                                 enabled: false
@@ -102,22 +106,19 @@ export default {
                 return;
             }
 
-            let charts = this.rows.map(s => {
-                let options = clone(this.chartOptions);
-                options.title.text = s.Race;
-                options.series = [
-                    {
-                        data: this.categories.map(c => +s[c]),
-                        name: s.Race
-                    }
-                ];
-                options.xAxis.categories = this.categories;
-                options.yAxis.min = 0;
-                options.yAxis.max = 0.43;
-                return options;
-            });
+            let options = clone(this.chartOptions);
 
-            this.charts = charts;
+            options.title.text = '';
+            options.series = this.rows.map(s => {
+                return {
+                    data: this.categories.map(c => +s[c]),
+                    name: s.Race
+                };
+            });
+            options.xAxis.categories = this.categories;
+            options.plotOptions.column.stacking = this.stacked ? 'normal' : null;
+
+            this.charts = [options];
         }
     },
     watch: {

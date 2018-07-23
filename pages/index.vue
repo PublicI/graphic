@@ -28,14 +28,16 @@
         <v-stepper-content step="3">
           <component v-bind:is="type" ref="graphic" @init="graphicInit" v-bind="graphicProps"></component>
           <v-btn color="primary" @click="e6 = 4">Continue</v-btn>
-          <v-btn flat>Cancel</v-btn>
+          <!-- <v-btn flat>Cancel</v-btn> -->
         </v-stepper-content>
 
         <v-stepper-step :editable="e6 > 4" step="4">Embed the graphic</v-stepper-step>
         <v-stepper-content step="4">
           <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+          <!--
           <v-btn color="primary" @click="e6 = 1">Continue</v-btn>
           <v-btn flat>Cancel</v-btn>
+          -->
         </v-stepper-content>
       </v-stepper>
 
@@ -75,16 +77,7 @@ export default {
     methods: {
         graphicInit(graphicProps) {
             this.graphicProps = {
-                categories: [
-                    'Less than $10,000 pct',
-                    '$10,000 to $20,000 pct',
-                    '$20,000 to $30,000 pct',
-                    '$30,000 to $40,000 pct',
-                    '$40,000 to $50,000 pct',
-                    '$50,000 to $75,000 pct',
-                    '$75,000 to $100,000 pct',
-                    '$100,000 and over pct'
-                ],
+                categories: Object.keys(this.rows[0]).slice(1),
                 rows: this.rows
             };
         },
