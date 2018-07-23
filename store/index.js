@@ -1,6 +1,6 @@
 export const state = () => ({
     data: [],
-    type: 'column-chart'
+    type: null
 });
 
 export const mutations = {

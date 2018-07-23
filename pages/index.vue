@@ -8,7 +8,7 @@
       <h1 class="display-1">Graphic maker</h1>
 
       <v-stepper v-model="e6" vertical>
-        <v-stepper-step editable :complete="e6 > 1" step="1">
+        <v-stepper-step editable :complete="rows.length > 0" step="1">
           Add your data
           <small>{{ rows.length > 0 ? rows.length + ' rows parsed' : '' }}</small>
         </v-stepper-step>
@@ -17,13 +17,13 @@
           <parser />
         </v-stepper-content>
 
-        <v-stepper-step editable :complete="e6 > 2" step="2">Choose the graphic type</v-stepper-step>
+        <v-stepper-step :editable="rows.length > 0" :complete="type !== null && rows.length > 0" step="2">Choose the graphic type</v-stepper-step>
 
         <v-stepper-content step="2">
           <chooser />
         </v-stepper-content>
 
-        <v-stepper-step editable :complete="e6 > 3" step="3">Configure graphic options</v-stepper-step>
+        <v-stepper-step :editable="rows.length > 0 && type !== null" :complete="e6 > 3" step="3">Configure graphic options</v-stepper-step>
 
         <v-stepper-content step="3">
           <component v-bind:is="type" ref="graphic" @init="graphicInit" v-bind="graphicProps"></component>
@@ -31,7 +31,7 @@
           <v-btn flat>Cancel</v-btn>
         </v-stepper-content>
 
-        <v-stepper-step editable step="4">Embed the graphic</v-stepper-step>
+        <v-stepper-step :editable="e6 > 4" step="4">Embed the graphic</v-stepper-step>
         <v-stepper-content step="4">
           <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
           <v-btn color="primary" @click="e6 = 1">Continue</v-btn>
@@ -87,8 +87,22 @@ export default {
                 ],
                 rows: this.rows
             };
-            console.log(this.graphicProps);
-            // console.log(wheee, this.$refs.graphic);
+        },
+        setType(type) {
+            this.$store.commit('setType', type);
+        }
+    },
+    watch: {
+        rows(val) {
+            if (val.length > 0) {
+                this.setType(null);
+                this.e6 = 2;
+            }
+        },
+        type(val) {
+            if (val) {
+                this.e6 = 3;
+            }
         }
     }
 };
