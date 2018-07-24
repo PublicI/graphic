@@ -24,6 +24,7 @@ export default {
         return {
             chartOptions: {
                 chart: {
+                    backgroundColor: null,
                     type: chartType,
                     // height: 140,
                     // paddingLeft: -10,
@@ -132,7 +133,6 @@ export default {
 
             options.title.text = '';
             options.series = Object.keys(this.rows[0]).slice(1).map(column => {
-                console.log(this.rows.map(d => +d[column]));
                 return {
                     data: this.rows.map(d => +d[column]),
                     name: column
