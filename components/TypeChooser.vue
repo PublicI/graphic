@@ -43,8 +43,8 @@ export default {
             }, {
                 key: 'statebin',
                 name: 'State map',
-                description: '',
-                img: 'img/barchart.png'
+                description: 'Show by state',
+                img: 'img/statebin.png'
             }]
         };
     },
