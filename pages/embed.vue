@@ -10,7 +10,7 @@ export default {
     async asyncData(ctx) {
         return {
             ...ctx.params
-        }
+        };
     },
     data() {
         return {

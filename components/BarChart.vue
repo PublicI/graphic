@@ -117,8 +117,8 @@ export default {
     components: {
         highcharts: Chart
     },
-    mounted() {
-        this.$emit('init',{
+    created() {
+        this.$emit('init', {
             // TKTK
         });
     },

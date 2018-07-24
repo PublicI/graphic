@@ -35,10 +35,15 @@ export default {
                 name: 'Column chart',
                 description: 'Facilitates comparison',
                 img: 'img/columnchart.png'
-            },{
+            }, {
                 key: 'bar-chart',
                 name: 'Bar chart',
                 description: 'Facilitates comparison',
+                img: 'img/barchart.png'
+            }, {
+                key: 'statebin',
+                name: 'State map',
+                description: '',
                 img: 'img/barchart.png'
             }]
         };

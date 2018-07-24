@@ -47,6 +47,7 @@ import DataInput from '~/components/DataInput.vue';
 import TypeChooser from '~/components/TypeChooser.vue';
 import ColumnChart from '~/components/ColumnChart.vue';
 import BarChart from '~/components/BarChart.vue';
+import Statebin from '~/components/Statebin.vue';
 import EmbedBox from '~/components/EmbedBox.vue';
 
 export default {
@@ -62,6 +63,7 @@ export default {
         TypeChooser,
         ColumnChart,
         BarChart,
+        Statebin,
         EmbedBox
     },
     computed: {

@@ -17,12 +17,15 @@
 export default {
     methods: {
         focused() {
-            console.log(this);
+            // console.log(this);
         }
     },
     computed: {
+        url() {
+            return '/embed?';
+        },
         embedHtml() {
-            return decodeURIComponent(`%3Cdiv id="graphic" data-view="/embed"%3E%3C/div"%3E
+            return decodeURIComponent(`%3Cdiv id="graphic" data-view="${this.url}"%3E%3C/div"%3E
 %3Cscript src="//apps.publicintegrity.org/graphic/embed.js" type="text/javascript"%3E%3C/script%3E`);
         }
     }
