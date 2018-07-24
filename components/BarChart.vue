@@ -10,18 +10,21 @@
 import { Chart } from 'highcharts-vue';
 import clone from 'lodash.clonedeep';
 
+let chartType = 'bar';
+
 export default {
     props: {
         categories: Array,
         rows: Array,
         stacked: Boolean,
-        grid: Boolean
+        grid: Boolean,
+        suffix: String
     },
     data() {
         return {
             chartOptions: {
                 chart: {
-                    type: 'bar',
+                    type: chartType,
                     // height: 140,
                     // paddingLeft: -10,
                     style: {
@@ -47,13 +50,13 @@ export default {
                 },
                 yAxis: {
                     // tickInterval: 15,
-                    gridLineWidth: 1,
+                    gridLineWidth: 0,
                     title: {
                         text: null
                     },
                     labels: {
-                        format: '{value}%'
-                        // enabled: false
+                        format: '{value}', // %
+                        enabled: false
                     }
                 },
                 legend: {
@@ -78,7 +81,16 @@ export default {
                     }
                 },
                 plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        stacking: null
+                    },
                     column: {
+                        dataLabels: {
+                            enabled: true
+                        },
                         stacking: null
                     },
                     series: {
@@ -127,7 +139,7 @@ export default {
                 };
             });
             options.xAxis.categories = this.categories;
-            options.plotOptions.column.stacking = this.stacked ? 'normal' : null;
+            options.plotOptions[chartType].stacking = this.stacked ? 'normal' : null;
 
             this.charts = [options];
         }
