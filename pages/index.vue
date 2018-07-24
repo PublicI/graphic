@@ -33,11 +33,7 @@
 
         <v-stepper-step :editable="e6 > 4" step="4">Embed the graphic</v-stepper-step>
         <v-stepper-content step="4">
-          <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-          <!--
-          <v-btn color="primary" @click="e6 = 1">Continue</v-btn>
-          <v-btn flat>Cancel</v-btn>
-          -->
+          <embed-box />
         </v-stepper-content>
       </v-stepper>
 
@@ -51,6 +47,7 @@ import DataInput from '~/components/DataInput.vue';
 import TypeChooser from '~/components/TypeChooser.vue';
 import ColumnChart from '~/components/ColumnChart.vue';
 import BarChart from '~/components/BarChart.vue';
+import EmbedBox from '~/components/EmbedBox.vue';
 
 export default {
     data() {
@@ -64,7 +61,8 @@ export default {
         DataInput,
         TypeChooser,
         ColumnChart,
-        BarChart
+        BarChart,
+        EmbedBox
     },
     computed: {
         type() {
@@ -99,6 +97,9 @@ export default {
                 this.e6 = 3;
             }
         }
+    },
+    head: {
+        title: 'Graphic maker'
     }
 };
 </script>

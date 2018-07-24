@@ -22,14 +22,6 @@ export default {
         ColumnChart,
         BarChart
     },
-    computed: {
-        type() {
-            return this.$store.state.type;
-        },
-        rows() {
-            return this.$store.state.data;
-        }
-    },
     methods: {
         graphicInit(graphicProps) {
             this.graphicProps = {
