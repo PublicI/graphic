@@ -14,13 +14,13 @@
         </v-stepper-step>
 
         <v-stepper-content step="1">
-          <parser />
+          <data-input />
         </v-stepper-content>
 
         <v-stepper-step :editable="rows.length > 0" :complete="type !== null && rows.length > 0" step="2">Choose the graphic type</v-stepper-step>
 
         <v-stepper-content step="2">
-          <chooser />
+          <type-chooser />
         </v-stepper-content>
 
         <v-stepper-step :editable="rows.length > 0 && type !== null" :complete="e6 > 3" step="3">Configure graphic options</v-stepper-step>
@@ -47,8 +47,8 @@
 
 <script>
 import Logo from '~/components/Logo.vue';
-import Parser from '~/components/Parser.vue';
-import Chooser from '~/components/Chooser.vue';
+import DataInput from '~/components/DataInput.vue';
+import TypeChooser from '~/components/TypeChooser.vue';
 import ColumnChart from '~/components/ColumnChart.vue';
 import BarChart from '~/components/BarChart.vue';
 
@@ -61,8 +61,8 @@ export default {
     },
     components: {
         Logo,
-        Parser,
-        Chooser,
+        DataInput,
+        TypeChooser,
         ColumnChart,
         BarChart
     },
@@ -76,8 +76,10 @@ export default {
     },
     methods: {
         graphicInit(graphicProps) {
+            let firstColumn = Object.keys(this.rows[0])[0];
+
             this.graphicProps = {
-                categories: Object.keys(this.rows[0]).slice(1),
+                categories: this.rows.map(d => d[firstColumn]),
                 rows: this.rows
             };
         },

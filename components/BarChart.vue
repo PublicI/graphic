@@ -11,11 +11,12 @@ import { Chart } from 'highcharts-vue';
 import clone from 'lodash.clonedeep';
 
 export default {
-    props: [
-        'categories',
-        'rows',
-        'stacked'
-    ],
+    props: {
+        categories: Array,
+        rows: Array,
+        stacked: Boolean,
+        grid: Boolean
+    },
     data() {
         return {
             chartOptions: {
@@ -63,7 +64,7 @@ export default {
                     }
                 },
                 tooltip: {
-                    // enabled: false
+                    enabled: false
                 },
                 credits: {
                     enabled: false
@@ -118,10 +119,11 @@ export default {
             let options = clone(this.chartOptions);
 
             options.title.text = '';
-            options.series = this.rows.map(s => {
+            options.series = Object.keys(this.rows[0]).slice(1).map(column => {
+                console.log(this.rows.map(d => +d[column]));
                 return {
-                    data: this.categories.map(c => +s[c]),
-                    name: s.Race
+                    data: this.rows.map(d => +d[column]),
+                    name: column
                 };
             });
             options.xAxis.categories = this.categories;
