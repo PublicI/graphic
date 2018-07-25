@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import stats from '~/assets/stats.csv';
 import { intcomma, postal } from 'journalize';
 import * as d3 from 'd3';
 import { legendColor } from 'd3-svg-legend';
