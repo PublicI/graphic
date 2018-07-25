@@ -33,6 +33,15 @@ export default {
             });
 
             let options = {
+                colors: [
+                    '#427aa8',
+                    '#fa8e1c',
+                    '#e95b54',
+                    '#6db6b2',
+                    '#519e4b',
+                    '#f3c73e',
+                    '#b37ca1'
+                ],
                 chart: {
                     backgroundColor: null,
                     type: this.type,
