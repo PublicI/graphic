@@ -41,6 +41,11 @@ export default {
                 description: 'Facilitates comparison',
                 img: 'img/barchart.png'
             }, {
+                key: 'line-chart',
+                name: 'Line chart',
+                description: 'Facilitates comparison',
+                img: 'img/linechart.png'
+            }, {
                 key: 'statebin',
                 name: 'State map',
                 description: 'Show by state',
