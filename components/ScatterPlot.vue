@@ -6,11 +6,7 @@ export default {
     props: {
         type: {
             type: String,
-            default: 'column'
-        },
-        directLabel: {
-            type: Boolean,
-            default: true
+            default: 'scatter'
         }
     }
 };

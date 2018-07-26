@@ -7,6 +7,10 @@ export default {
         type: {
             type: String,
             default: 'bar'
+        },
+        directLabel: {
+            type: Boolean,
+            default: true
         }
     }
 };

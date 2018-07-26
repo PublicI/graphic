@@ -17,7 +17,8 @@ export default {
         rows: Array,
         stacked: Boolean,
         grid: Boolean,
-        suffix: String
+        suffix: String,
+        directLabel: Boolean
     },
     computed: {
         charts() {
@@ -71,13 +72,13 @@ export default {
                 },
                 yAxis: {
                     // tickInterval: 15,
-                    gridLineWidth: this.type === 'line' ? 0 : 1,
+                    gridLineWidth: this.directLabel ? 0 : 1,
                     title: {
                         text: null
                     },
                     labels: {
                         format: '{value}', // %
-                        enabled: this.type !== 'line'
+                        enabled: !this.directLabel
                     }
                 },
                 legend: {
@@ -116,6 +117,11 @@ export default {
                         stacking: this.stacked ? 'normal' : null
                     },
                     line: {
+                        marker: {
+                            symbol: 'circle'
+                        }
+                    },
+                    scatter: {
                         marker: {
                             symbol: 'circle'
                         }

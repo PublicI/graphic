@@ -33,22 +33,27 @@ export default {
             types: [{
                 key: 'column-chart',
                 name: 'Column chart',
-                description: 'Facilitates comparison',
+                description: 'Good for comparison, over time',
                 img: 'img/columnchart.png'
             }, {
                 key: 'bar-chart',
                 name: 'Bar chart',
-                description: 'Facilitates comparison',
+                description: 'Good for long category names',
                 img: 'img/barchart.png'
             }, {
                 key: 'line-chart',
                 name: 'Line chart',
-                description: 'Facilitates comparison',
+                description: 'Good for denser data over time',
                 img: 'img/linechart.png'
             }, {
+                key: 'scatter-plot',
+                name: 'Scatter plot',
+                description: 'Good for showing correlations',
+                img: 'img/scatterplot.png'
+            }, {
                 key: 'statebin',
-                name: 'State map',
-                description: 'Show by state',
+                name: 'State bins',
+                description: 'Good for showing state-level data',
                 img: 'img/statebin.png'
             }]
         };
