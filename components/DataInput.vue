@@ -16,14 +16,43 @@
           Successfully parsed {{success}} rows of data.
         </v-alert>
 
-        <v-textarea
-          outline
-          name="parseable-data"
-          label="Paste data here"
-          v-model="parseableData"
-          autofocus
-          :auto-grow="true"
-        ></v-textarea>
+        <v-tabs v-model="tabs">
+          <v-tab>
+            Input
+          </v-tab>
+          <v-tab>
+            Table
+          </v-tab>
+        </v-tabs>
+
+
+        <v-tabs-items v-model="tabs">
+          <v-tab-item>
+            <v-textarea
+              outline
+              name="parseable-data"
+              label="Paste data here"
+              v-model="parseableData"
+              autofocus
+              :auto-grow="true"
+              style="margin-top: 10px"
+            ></v-textarea>
+          </v-tab-item>
+
+          <v-tab-item>
+            <v-data-table
+              :headers="headers"
+              :items="parsedData"
+              hide-actions
+              class="elevation-1"
+            >
+              <template slot="items" slot-scope="props">
+                <td v-for="header in headers">{{ props.item[header.value] }}</td>
+              </template>
+            </v-data-table>
+          </v-tab-item>
+        </v-tabs-items>
+
     </div>
 
 </template>
@@ -48,10 +77,23 @@ export default {
     },
     data() {
         return {
+            tabs: null,
             parseableData: ''
         };
     },
     computed: {
+        headers() {
+            if (!this.parsedData || this.parsedData.length < 1) {
+                return [];
+            }
+
+            return Object.keys(this.parsedData[0]).map(key => {
+                return {
+                    text: key,
+                    value: key
+                };
+            });
+        },
         parsedData() {
             return this.$store.state.data;
         },
