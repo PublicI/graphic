@@ -52,6 +52,7 @@ module.exports = {
         { src: '~/plugins/pym.js', ssr: false },
         { src: '~/plugins/typekit.js', ssr: false },
         { src: '~/plugins/chartbeat.js', ssr: false },
+        { src: '~/plugins/codemirror.js', ssr: false },
         '~/plugins/vuetify.js'
     ],
     vendor: [
@@ -76,7 +77,10 @@ module.exports = {
     /*
      ** Global CSS
      */
-    css: ['~/assets/css/main.styl'],
+    css: [
+        '~/assets/css/main.styl',
+        'codemirror/lib/codemirror.css'
+    ],
     /*
      ** Add axios globally
      */

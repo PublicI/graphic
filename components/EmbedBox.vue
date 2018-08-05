@@ -31,9 +31,3 @@ export default {
     }
 };
 </script>
-
-<style>
-textarea {
-    font-size: 13px;
-}
-</style>
