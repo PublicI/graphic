@@ -29,7 +29,7 @@
           <v-tab-item>
 
             <no-ssr placeholder="Editor Loading...">
-                <codemirror ref="cm" :options="{lineNumbers: true}" v-model="parseableData">
+                <codemirror ref="cm" :options="cmOptions" v-model="parseableData">
                 </codemirror>
             </no-ssr>
 
@@ -85,7 +85,12 @@ export default {
     data() {
         return {
             tabs: null,
-            parseableData: ''
+            parseableData: '',
+            cmOptions: {
+              lineNumbers: true,
+              autofocus: true,
+              placeholder: 'Paste data here'
+            }
         };
     },
     computed: {
@@ -142,7 +147,8 @@ export default {
                 vm.codemirror.refresh();
             },1000);
         });
-    }*/
+    }
+    */
 };
 </script>
 
@@ -210,5 +216,12 @@ pre.CodeMirror-placeholder {
 .CodeMirror .line-error {
   background-color: #FFF3B8;
   color: #3F403F;
+}
+
+.cm-tab {
+   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+   background-position: right;
+   background-repeat: no-repeat;
+   opacity: .3;
 }
 </style>

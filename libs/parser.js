@@ -66,7 +66,7 @@ function typeOf(value) {
 }
 
 function parser(delimiter) {
-    // Insiperd by Ben Nadel's algorithm
+    // Inspired by Ben Nadel's algorithm
     // http://www.bennadel.com/blog/1504-ask-ben-parsing-csv-strings-with-javascript-exec-regular-expression-command.htm
     function parser(string) {
         if (!string || string.length === 0) return [];
