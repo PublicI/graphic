@@ -1,5 +1,7 @@
 <template>
-    <component v-bind:is="type" v-if="type" ref="graphic" @init="graphicInit" v-bind="graphicProps"></component>
+    <no-ssr>
+        <component v-bind:is="type" v-if="type" ref="graphic" @init="graphicInit" v-bind="graphicProps"></component>
+    </no-ssr>
 </template>
 
 <script>
