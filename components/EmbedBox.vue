@@ -33,8 +33,9 @@ export default {
             return `embed/?props=${qs}`;
         },
         embedHtml() {
-            return decodeURIComponent(`%3Cdiv id="graphic" data-view="${this.url}"%3E%3C/div"%3E
-%3Cscript src="//apps.publicintegrity.org/graphic/embed.js" type="text/javascript"%3E%3C/script%3E`);
+            return decodeURIComponent('%3Cdiv id="graphic" data-view="') +
+                    this.url +
+                    decodeURIComponent('"%3E%3C/div"%3E %3Cscript src="//apps.publicintegrity.org/graphic/embed.js" type="text/javascript"%3E%3C/script%3E');
         }
     }
 };

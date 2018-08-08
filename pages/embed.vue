@@ -17,7 +17,7 @@ export default {
     },
     asyncData(ctx) {
         return {
-            ...JSON.parse(ctx.query.props)
+            ...JSON.parse(decodeURIComponent(ctx.query.props))
         };
     },
     components: {
