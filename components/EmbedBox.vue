@@ -25,10 +25,10 @@ export default {
     computed: {
         ...mapState(['data', 'type']),
         url() {
-            let qs = JSON.stringify({
+            let qs = encodeURIComponent(JSON.stringify({
                 rows: this.data,
                 type: this.type
-            });
+            }));
 
             return `embed/?props=${qs}`;
         },
