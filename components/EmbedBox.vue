@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
     methods: {
         focused() {
@@ -21,8 +23,14 @@ export default {
         }
     },
     computed: {
+        ...mapState(['data', 'type']),
         url() {
-            return '/embed?';
+            let qs = JSON.stringify({
+                rows: this.data,
+                type: this.type
+            });
+
+            return `embed/?props=${qs}`;
         },
         embedHtml() {
             return decodeURIComponent(`%3Cdiv id="graphic" data-view="${this.url}"%3E%3C/div"%3E
