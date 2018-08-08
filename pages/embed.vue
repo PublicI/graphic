@@ -14,12 +14,8 @@ import Statebin from '~/components/Statebin.vue';
 export default {
     data() {
         return {
+            ...JSON.parse(decodeURIComponent(this.$route.query.props)),
             graphicProps: null
-        };
-    },
-    asyncData(ctx) {
-        return {
-            ...JSON.parse(decodeURIComponent(ctx.query.props))
         };
     },
     components: {
