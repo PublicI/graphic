@@ -29,8 +29,10 @@ export default {
     },
     methods: {
         graphicInit(graphicProps) {
+            let firstColumn = Object.keys(this.rows[0])[0];
+
             this.graphicProps = {
-                categories: Object.keys(this.rows[0]).slice(1),
+                categories: this.rows.map(d => d[firstColumn]),
                 rows: this.rows
             };
         }
