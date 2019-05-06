@@ -1,12 +1,12 @@
 <template>
-    <div class="statebinContainer">
-        <svg style="width:100%;height:60px">
+    <div class="statebinContainer" style="position: relative;">
+        <svg style="width:100%;height:60px;position: absolute; top: 0px; left: -12px">
             <g class="legendLinear" transform="translate(20,20)">
             </g>
         </svg>
 
         <div class="statebins">
-            <div :style="(bin.color == '#ffffd4' ? 'color:rgb(210,210,210);' : '') + 'top:' + bin.y + 'px;left:' + bin.x + 'px;background-color:' + bin.color" class="statebin" v-for="bin in bins" v-tooltip="{ content: '<b>' + bin.name + '</b><br>' + bin.formattedRecoveries + ' recoveries' }" v-bind:key="bin.abbr">
+            <div :style="(bin.color == '#ffffd4' ? 'color:rgb(210,210,210);' : '') + 'top:' + bin.y + 'px;left:' + bin.x + 'px;background-color:' + bin.color + ';width:' + (boxSize-2) + 'px;height:' + (boxSize-2) + 'px'" class="statebin" v-for="bin in bins" v-bind:key="bin.abbr"> <!--  v-tooltip="{ content: '<b>' + bin.name + '</b><br>' + bin.formattedRecoveries + ' recoveries' }" -->
                 {{bin.abbrev}}
             </div>
         </div>
@@ -22,47 +22,70 @@ import { legendColor } from 'd3-svg-legend';
 
 export default {
     props: {
+        colors: Array,
+        labels: Array,
         rows: Array
     },
     data() {
         return {
+            boxSize: 26,
             grid: [
                 '                                  ME',
                 '                   WI          VT NH',
                 '    WA ID MT ND MN IL MI    NY MA',
                 '    OR NV WY SD IA IN OH PA NJ CT RI',
                 '    CA UT CO NE MO KY WV VA MD DE',
-                '       AZ NM KS AR TN NC SC',
+                '       AZ NM KS AR TN NC SC DC',
                 '             OK LA MS AL GA',
                 '    HI AK    TX             FL'
             ]
         };
     },
-    created() {
-        this.$emit('init', {
-            // TKTK
-        });
-    },
     mounted() {
-        this.$nextTick(() => {
-            let legendLinear = legendColor()
-                .shapeWidth(30)
-                .labels(['>0', '>100', '>500', '>1K', '>5K'])
-                // .labelAlign('end')
-                .orient('horizontal')
-                .labelFormat(',')
-                .scale(this.scale());
+        let vm = this;
 
-            d3.select('.legendLinear').call(legendLinear);
+        vm.$nextTick(() => {
+            let legendLinear = legendColor()
+                .shapeWidth(24)
+                .shapeHeight(24)
+                // .labels(['Allowed','Banned','Banned in House','Debating','None',''])
+                // .labelAlign('end')
+                // .orient('horizontal')
+                // .labelFormat(',')
+                .scale(vm.scale());
+
+            d3.select(vm.$el).select('.legendLinear').call(legendLinear);
         });
+
+        if (typeof window !== 'undefined') {
+            if (vm.$el.offsetWidth >= 400) {
+                vm.boxSize = 36;
+            }
+            else {
+                vm.boxSize = 26;
+            }
+
+            window.addEventListener('resize',() => {
+                if (vm.$el.offsetWidth >= 400) {
+                    vm.boxSize = 36;
+                }
+                else {
+                    vm.boxSize = 26;
+                }
+            });
+        }
     },
     methods: {
         scale() {
             // const logScale = d3.scaleLog().domain([1, 8566]);
 
-            let thresholdScale = d3.scaleThreshold()
-                .domain([100, 500, 1000, 5000, 10000])
-                .range(d3.schemeYlOrBr[5]);
+            // let thresholdScale = d3.scaleThreshold()
+            //     .domain([100, 500, 1000, 5000, 10000])
+            //     .range(d3.schemeYlOrBr[5]);
+
+            let thresholdScale = d3.scaleOrdinal()
+                .domain(this.labels)
+                .range(this.colors)
 
             return thresholdScale;
             /*
@@ -80,7 +103,7 @@ export default {
             let binsRef = {};
             let bins = [];
 
-            let boxSize = 26;
+            let boxSize = this.boxSize;
 
             let re = /\w+/g;
 
@@ -94,7 +117,6 @@ export default {
                         y: i * boxSize,
                         color: null,
                         name: null,
-                        recoveries: null
                     };
 
                     bins.push(state);
@@ -106,10 +128,8 @@ export default {
             this.rows.forEach(function(d) {
                 let abbrev = postal(d.state);
                 if (abbrev in binsRef) {
-                    binsRef[abbrev].color = scale(d.recoveries);
+                    binsRef[abbrev].color = scale(d.link);
                     binsRef[abbrev].name = d.state;
-                    binsRef[abbrev].recoveries = d.recoveries;
-                    binsRef[abbrev].formattedRecoveries = intcomma(d.recoveries);
                 }
             });
 
@@ -119,24 +139,37 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
 .statebins {
     position: relative;
     width: 300px;
     height: 220px;
-    margin-top: -19px;
+    // margin-top:15px;
 }
 
 .statebin {
     position: absolute;
-    width: 24px;
-    height: 24px;
     background-color: #eee;
-    color: white;
+    color: rgb(140,140,140);
     text-align: center;
     font-size: 12px;
+    padding-top: 3px;
     line-height: 20px;
-    padding-top: 1px;
+    // color: #04284b;
+    font-family: MaisonNeue,Arial,Helvetica,Verdana,sans-serif;
+    font-weight: 400;
+    letter-spacing: .3px;
+    line-height: 1.5;
+}
+
+.statebin a {
+    // color: rgb(115,115,115);
+    font-family: MaisonNeue,Arial,Helvetica,Verdana,sans-serif;
+    font-weight: 400;
+    letter-spacing: .3px;
+    line-height: 1.5;
+    text-decoration: none;
+    background-image: none;
 }
 
 .tooltip {
@@ -149,10 +182,11 @@ export default {
     color: black;
     border-radius: 2px;
     padding: 5px 10px 4px;
+    /*
     font-family: tablet-gothic-n2, tablet-gothic, Helvetica Neue, Helvetica,
         Arial, sans-serif;
     font-size: 16px;
-    line-height: 19px;
+    line-height: 19px;*/
 }
 
 .tooltip .tooltip-arrow {
@@ -256,10 +290,31 @@ export default {
 }
 
 .legendLinear .label {
+    font-family: MaisonNeue,Arial,Helvetica,Verdana,sans-serif;
+    font-weight: 400;
+    letter-spacing: .3px;
+    line-height: 1.5;
+    font-size: 15px;
+    /*
     font-family: tablet-gothic-n2, tablet-gothic, Helvetica Neue, Helvetica,
         Arial, sans-serif;
     font-size: 13px;
     line-height: 16px;
+    */
     fill: rgb(100, 100, 100);
+}
+
+@media only screen and (min-width: 400px) {
+    .statebin {
+        font-size: 16px;
+        padding-top: 6px;
+    }
+
+    .statebins {
+        position: relative;
+        width: 420px;
+        height: 350px;
+        // margin-top:15px;
+    }
 }
 </style>
