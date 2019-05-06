@@ -6,30 +6,25 @@ pipeline:
   #   secrets: [ aws_access_key_id, aws_secret_access_key ]
   #   root: publici-drone/
   #   mount:
-  #     - ./.yarn-cache
+  #     - ./.npm-cache
   #     - ./node_modules
 
   install:
-    image: node:8.11.3
+    image: node:10.13-alpine
     commands:
-      - yarn config set cache-folder .yarn-cache
-      - yarn install --pure-lockfile
-
-  test:
-    image: node:8.11.3
-    commands:
-      - yarn test
+      - npm config set cache .npm-cache
+      - npm ci --production
 
   generate:
-    image: node:8.11.3
+    image: node:10.13-alpine
     commands:
-      - yarn generate
+      - npm run generate
 
   push:
-    image: node:8.11.3
+    image: node:10.13-alpine
     secrets: [aws_access_key_id, aws_secret_access_key]
     commands:
-      - yarn push
+      - npm run push
     when:
       branch: master
 
@@ -40,7 +35,7 @@ pipeline:
   #   secrets: [ aws_access_key_id, aws_secret_access_key ]
   #   root: publici-drone/
   #   mount:
-  #     - ./.yarn-cache
+  #     - ./.npm-cache
   #     - ./node_modules
   #   when:
   #     branch: master
@@ -55,6 +50,8 @@ pipeline:
   slack:
     image: plugins/slack
     secrets: [ slack_webhook ]
+    when:
+      status: [ success, failure ]
     template: >
       {{#success build.status}}
         published https://apps.publicintegrity.org/graphic/

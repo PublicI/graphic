@@ -50,8 +50,6 @@
 </template>
 
 <style>
-
-
 .cls-1 {
     fill: red;
 }

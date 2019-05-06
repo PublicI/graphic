@@ -5,20 +5,17 @@
 ## Build setup
 
 ``` bash
-# install dependencies
-$ yarn
-
 # serve with hot reload at localhost:3000/graphic
-$ yarn dev
+$ npm run dev
 
 # build for production and launch server
-$ yarn start
+$ npm start
 
 # or generate static page
-$ yarn generate
+$ npm run generate
 
 # and push to s3
-$ yarn push
+$ npm run push
 ```
 
-For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
+For detailed explanation on how things work, check out the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).

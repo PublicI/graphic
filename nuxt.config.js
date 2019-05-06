@@ -21,8 +21,8 @@ module.exports = {
         link: [
             {
                 rel: 'icon',
-                type: 'image/x-icon',
-                href: `/${pkg.name}/favicon.ico`
+                type: 'image/png',
+                href: `/${pkg.name}/favicon.png`
             },
             {
                 rel: 'stylesheet',
@@ -50,7 +50,6 @@ module.exports = {
     ],
     plugins: [
         { src: '~/plugins/pym.js', ssr: false },
-        { src: '~/plugins/typekit.js', ssr: false },
         { src: '~/plugins/chartbeat.js', ssr: false },
         { src: '~/plugins/codemirror.js', ssr: false },
         '~/plugins/vuetify.js'
@@ -64,12 +63,6 @@ module.exports = {
             ? `http://${process.env.HOST || 'localhost'}:${process.env.PORT ||
                   3000}`
             : `/${pkg.name}/`
-    },
-    generate: {
-        minify: {
-            collapseWhitespace: false,
-            removeEmptyAttributes: false
-        }
     },
     router: {
         base: `/${pkg.name}/`
@@ -85,7 +78,12 @@ module.exports = {
      ** Add axios globally
      */
     build: {
-        vendor: ['axios'],
+        html: {
+            minify: {
+                collapseWhitespace: false,
+                removeEmptyAttributes: false
+            }
+        },
         /*
          ** Run ESLINT on save
          */
@@ -96,7 +94,7 @@ module.exports = {
                 exclude: /(node_modules)/
             });
 
-            if (ctx.isClient) {
+            if (ctx.isClient && process.env.NODE_ENV !== 'production') {
                 config.module.rules.push({
                     enforce: 'pre',
                     test: /\.(js|vue)$/,
