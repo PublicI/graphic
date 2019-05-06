@@ -22,7 +22,8 @@ module.exports = {
             {
                 rel: 'icon',
                 type: 'image/png',
-                href: `/${pkg.name}/favicon.png`
+                sizes: '32x32',
+                href: 'https://publicintegrity.org/wp-content/themes/cpi/static/img/favicon/favicon-32x32.png'
             },
             {
                 rel: 'stylesheet',
