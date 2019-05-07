@@ -22,9 +22,30 @@ import { legendColor } from 'd3-svg-legend';
 
 export default {
     props: {
-        colors: Array,
-        labels: Array,
-        rows: Array
+        colors: {
+            type: Array,
+            default() {
+                return ['#f5e205'];
+            }
+        },
+        categories: {
+            type: Array,
+            default() {
+                return ['Enacted'];
+            }
+        },
+        rows: {
+            type: Array,
+            default() {
+                return [];
+            }
+        },
+        column: {
+            type: String,
+            default() {
+                return 'passed?';
+            }
+        }
     },
     data() {
         return {
@@ -84,7 +105,7 @@ export default {
             //     .range(d3.schemeYlOrBr[5]);
 
             let thresholdScale = d3.scaleOrdinal()
-                .domain(this.labels)
+                .domain(this.categories)
                 .range(this.colors)
 
             return thresholdScale;
@@ -98,6 +119,8 @@ export default {
     },
     computed: {
         bins() {
+            let vm = this;
+
             let scale = this.scale();
 
             let binsRef = {};
@@ -128,7 +151,8 @@ export default {
             this.rows.forEach(function(d) {
                 let abbrev = postal(d.state);
                 if (abbrev in binsRef) {
-                    binsRef[abbrev].color = scale(d.link);
+                    console.log(d,vm.column,d[vm.column]);
+                    binsRef[abbrev].color = scale(d[vm.column]);
                     binsRef[abbrev].name = d.state;
                 }
             });

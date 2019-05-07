@@ -3,12 +3,12 @@
         <v-layout row wrap>
           <v-flex lg4 md6 sm12 v-for="type in types" :key="type.key">
               <v-card @click="setType(type.key)" hover :color="currentType == type.key ? 'amber lighten-5' : ''">
-                <v-card-media
+                <v-img
                   :src="type.img"
                   height="150px"
                   flat
                   @click="setType(type.key)"
-                ></v-card-media>
+                ></v-img>
 
                 <v-card-title @click="setType(type.key)" primary-title>
                   <div>
