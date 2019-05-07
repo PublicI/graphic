@@ -72,6 +72,7 @@ module.exports = {
      ** Global CSS
      */
     css: [
+        '~/assets/css/site.css',
         '~/assets/css/main.styl',
         'codemirror/lib/codemirror.css'
     ],
