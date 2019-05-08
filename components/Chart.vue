@@ -72,7 +72,7 @@ export default {
                     // height: 140,
                     // paddingLeft: -10,
                     style: {
-                        fontFamily: 'tablet-gothic-narrow'
+                        fontFamily: 'MaisonNeue'
                     }
                 },
                 xAxis: {
