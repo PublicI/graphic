@@ -95,7 +95,13 @@ export default {
             });
         },
         parsedData() {
-            return this.$store.state.data;
+            let parsedData = this.$store.state.data;
+
+            if (!parsedData || parsedData.length < 1 || typeof parsedData[0] !== 'object') {
+                return [];
+            }
+
+            return parsedData;
         },
         error() {
             return this.parsedData instanceof Error
