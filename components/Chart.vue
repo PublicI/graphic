@@ -1,7 +1,7 @@
 <template>
     <section class="charts">
-        <div v-for="chart in charts" class="chart">
-            <highcharts :options="chart"></highcharts>
+        <div v-for="(chart,i) in charts" :key="i" class="chart">
+            <highcharts :options="chart" />
         </div>
     </section>
 </template>
@@ -11,27 +11,50 @@ import { Chart } from 'highcharts-vue';
 // import clone from 'lodash.clonedeep';
 
 export default {
+    components: {
+        highcharts: Chart
+    },
     props: {
-        type: String,
-        categories: Array,
-        rows: Array,
+        type: {
+            type: String,
+            default: 'bar'
+        },
+        categories: {
+            type: Array,
+            default() {
+                return [];
+            }
+        },
+        rows: {
+            type: Array,
+            default() {
+                return [];
+            }
+        },
         stacked: Boolean,
         grid: Boolean,
-        suffix: String,
+        suffix: {
+            type: String,
+            default() {
+                return '';
+            }
+        },
         directLabel: Boolean
     },
     computed: {
         charts() {
-            if (!this.categories || !this.rows) {
+            if (!this.categories || !this.rows || this.rows.length === 0) {
                 return [];
             }
 
-            let series = Object.keys(this.rows[0]).slice(1).map(column => {
-                return {
-                    data: this.rows.map(d => +d[column]),
-                    name: column
-                };
-            });
+            let series = Object.keys(this.rows[0])
+                .slice(1)
+                .map(column => {
+                    return {
+                        data: this.rows.map(d => +d[column]),
+                        name: column
+                    };
+                });
 
             let options = {
                 colors: [
@@ -149,9 +172,6 @@ export default {
             return [options];
         }
     },
-    components: {
-        highcharts: Chart
-    },
     created() {
         this.$emit('init', {
             // TKTK
@@ -160,5 +180,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

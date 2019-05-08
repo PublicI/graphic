@@ -1,13 +1,33 @@
 <template>
     <div class="statebinContainer" style="position: relative;">
-        <svg style="width:100%;height:60px;position: absolute; top: 0px; left: -12px">
-            <g class="legendLinear" transform="translate(20,20)">
-            </g>
+        <svg
+            style="width:100%;height:60px;position: absolute; top: 0px; left: -12px"
+        >
+            <g class="legendLinear" transform="translate(20,20)" />
         </svg>
 
         <div class="statebins">
-            <div :style="(bin.color == '#ffffd4' ? 'color:rgb(210,210,210);' : '') + 'top:' + bin.y + 'px;left:' + bin.x + 'px;background-color:' + bin.color + ';width:' + (boxSize-2) + 'px;height:' + (boxSize-2) + 'px'" class="statebin" v-for="bin in bins" v-bind:key="bin.abbr"> <!--  v-tooltip="{ content: '<b>' + bin.name + '</b><br>' + bin.formattedRecoveries + ' recoveries' }" -->
-                {{bin.abbrev}}
+            <div
+                v-for="bin in bins"
+                :key="bin.abbr"
+                :style="
+                    (bin.color == '#ffffd4' ? 'color:rgb(210,210,210);' : '') +
+                        'top:' +
+                        bin.y +
+                        'px;left:' +
+                        bin.x +
+                        'px;background-color:' +
+                        bin.color +
+                        ';width:' +
+                        (boxSize - 2) +
+                        'px;height:' +
+                        (boxSize - 2) +
+                        'px'
+                "
+                class="statebin"
+            >
+                <!--  v-tooltip="{ content: '<b>' + bin.name + '</b><br>' + bin.formattedRecoveries + ' recoveries' }" -->
+                {{ bin.abbrev }}
             </div>
         </div>
 
@@ -16,7 +36,7 @@
 </template>
 
 <script>
-import { intcomma, postal } from 'journalize';
+import { postal } from 'journalize';
 import * as d3 from 'd3';
 import { legendColor } from 'd3-svg-legend';
 
@@ -62,61 +82,6 @@ export default {
             ]
         };
     },
-    mounted() {
-        let vm = this;
-
-        vm.$nextTick(() => {
-            let legendLinear = legendColor()
-                .shapeWidth(24)
-                .shapeHeight(24)
-                // .labels(['Allowed','Banned','Banned in House','Debating','None',''])
-                // .labelAlign('end')
-                // .orient('horizontal')
-                // .labelFormat(',')
-                .scale(vm.scale());
-
-            d3.select(vm.$el).select('.legendLinear').call(legendLinear);
-        });
-
-        if (typeof window !== 'undefined') {
-            if (vm.$el.offsetWidth >= 400) {
-                vm.boxSize = 36;
-            }
-            else {
-                vm.boxSize = 26;
-            }
-
-            window.addEventListener('resize',() => {
-                if (vm.$el.offsetWidth >= 400) {
-                    vm.boxSize = 36;
-                }
-                else {
-                    vm.boxSize = 26;
-                }
-            });
-        }
-    },
-    methods: {
-        scale() {
-            // const logScale = d3.scaleLog().domain([1, 8566]);
-
-            // let thresholdScale = d3.scaleThreshold()
-            //     .domain([100, 500, 1000, 5000, 10000])
-            //     .range(d3.schemeYlOrBr[5]);
-
-            let thresholdScale = d3.scaleOrdinal()
-                .domain(this.categories)
-                .range(this.colors)
-
-            return thresholdScale;
-            /*
-            return d3.scaleSequential(d => {
-                console.log(d, quantizeScale(d));
-                return d3.interpolateYlOrBr(quantizeScale(d));
-            });
-            */
-        }
-    },
     computed: {
         bins() {
             let vm = this;
@@ -136,10 +101,10 @@ export default {
                     // eslint-disable-line no-cond-assign
                     let state = {
                         abbrev: m[0],
-                        x: m.index / 3 * boxSize - (boxSize + 2),
+                        x: (m.index / 3) * boxSize - (boxSize + 2),
                         y: i * boxSize,
                         color: null,
-                        name: null,
+                        name: null
                     };
 
                     bins.push(state);
@@ -151,13 +116,73 @@ export default {
             this.rows.forEach(function(d) {
                 let abbrev = postal(d.state);
                 if (abbrev in binsRef) {
-                    console.log(d,vm.column,d[vm.column]);
                     binsRef[abbrev].color = scale(d[vm.column]);
                     binsRef[abbrev].name = d.state;
                 }
             });
 
             return bins;
+        }
+    },
+    mounted() {
+        let vm = this;
+
+        vm.$nextTick(() => {
+            let legendLinear = legendColor()
+                .shapeWidth(24)
+                .shapeHeight(24)
+                // .labels(['Allowed','Banned','Banned in House','Debating','None',''])
+                // .labelAlign('end')
+                // .orient('horizontal')
+                // .labelFormat(',')
+                .scale(vm.scale());
+
+            d3.select(vm.$el)
+                .select('.legendLinear')
+                .call(legendLinear);
+        });
+
+        if (typeof window !== 'undefined') {
+            if (vm.$el.offsetWidth >= 400) {
+                vm.boxSize = 36;
+            } else {
+                vm.boxSize = 26;
+            }
+
+            window.addEventListener('resize', () => {
+                if (vm.$el.offsetWidth >= 400) {
+                    vm.boxSize = 36;
+                } else {
+                    vm.boxSize = 26;
+                }
+            });
+        }
+    },
+    created() {
+        this.$emit('init', {
+            // TKTK
+        });
+    },
+    methods: {
+        scale() {
+            // const logScale = d3.scaleLog().domain([1, 8566]);
+
+            // let thresholdScale = d3.scaleThreshold()
+            //     .domain([100, 500, 1000, 5000, 10000])
+            //     .range(d3.schemeYlOrBr[5]);
+
+            let thresholdScale = d3
+                .scaleOrdinal()
+                .domain(this.categories)
+                .range(this.colors);
+
+            return thresholdScale;
+            /*
+            return d3.scaleSequential(d => {
+                console.log(d, quantizeScale(d));
+                return d3.interpolateYlOrBr(quantizeScale(d));
+            });
+            */
         }
     }
 };
@@ -174,23 +199,23 @@ export default {
 .statebin {
     position: absolute;
     background-color: #eee;
-    color: rgb(140,140,140);
+    color: rgb(140, 140, 140);
     text-align: center;
     font-size: 12px;
     padding-top: 3px;
     line-height: 20px;
     // color: #04284b;
-    font-family: MaisonNeue,Arial,Helvetica,Verdana,sans-serif;
+    font-family: MaisonNeue, Arial, Helvetica, Verdana, sans-serif;
     font-weight: 400;
-    letter-spacing: .3px;
+    letter-spacing: 0.3px;
     line-height: 1.5;
 }
 
 .statebin a {
     // color: rgb(115,115,115);
-    font-family: MaisonNeue,Arial,Helvetica,Verdana,sans-serif;
+    font-family: MaisonNeue, Arial, Helvetica, Verdana, sans-serif;
     font-weight: 400;
-    letter-spacing: .3px;
+    letter-spacing: 0.3px;
     line-height: 1.5;
     text-decoration: none;
     background-image: none;
@@ -314,9 +339,9 @@ export default {
 }
 
 .legendLinear .label {
-    font-family: MaisonNeue,Arial,Helvetica,Verdana,sans-serif;
+    font-family: MaisonNeue, Arial, Helvetica, Verdana, sans-serif;
     font-weight: 400;
-    letter-spacing: .3px;
+    letter-spacing: 0.3px;
     line-height: 1.5;
     font-size: 15px;
     /*

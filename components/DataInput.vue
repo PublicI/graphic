@@ -1,19 +1,19 @@
 <template>
     <div>
         <v-alert
+          v-if="error !== null"
           :value="true"
           type="error"
-          v-if="error !== null"
         >
-          Unable to parse data: {{error}}
+          Unable to parse data: {{ error }}
         </v-alert>
 
         <v-alert
+          v-if="success !== null"
           :value="true"
           type="success"
-          v-if="success !== null"
         >
-          Successfully parsed {{success}} rows of data.
+          Successfully parsed {{ success }} rows of data.
         </v-alert>
 
         <v-tabs v-model="tabs">
@@ -29,8 +29,7 @@
           <v-tab-item>
 
             <no-ssr placeholder="Editor Loading...">
-                <codemirror ref="cm" :options="cmOptions" v-model="parseableData">
-                </codemirror>
+                <codemirror ref="cm" v-model="parseableData" :options="cmOptions" />
             </no-ssr>
 
             <!--
@@ -54,7 +53,7 @@
               class="elevation-1"
             >
               <template slot="items" slot-scope="props">
-                <td v-for="header in headers">{{ props.item[header.value] }}</td>
+                <td v-for="header in headers" :key="header.value">{{ props.item[header.value] }}</td>
               </template>
             </v-data-table>
           </v-tab-item>
@@ -68,28 +67,14 @@
 import parser from '~/libs/parser.js';
 
 export default {
-    methods: {
-        parseData(data) {
-            let parse = parser();
-
-            try {
-                return parse(data);
-            } catch (e) {
-                return e;
-            }
-        },
-        setData(data) {
-            this.$store.commit('setData', this.parseData(data));
-        }
-    },
     data() {
         return {
             tabs: null,
             parseableData: '',
             cmOptions: {
-              lineNumbers: true,
-              autofocus: true,
-              placeholder: 'Paste data here'
+                lineNumbers: true,
+                autofocus: true,
+                placeholder: 'Paste data here'
             }
         };
     },
@@ -137,7 +122,21 @@ export default {
                 });
             }
         }
-    }
+    },
+    methods: {
+        parseData(data) {
+            let parse = parser();
+
+            try {
+                return parse(data);
+            } catch (e) {
+                return e;
+            }
+        },
+        setData(data) {
+            this.$store.commit('setData', this.parseData(data));
+        }
+    },
     /*,
     mounted() {
         let vm = this;

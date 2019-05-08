@@ -1,6 +1,6 @@
 <template>
     <no-ssr>
-        <component v-bind:is="type" v-if="type" ref="graphic" @init="graphicInit" v-bind="graphicProps"></component>
+        <component :is="type" v-if="type" ref="graphic" v-bind="graphicProps" @init="graphicInit" />
     </no-ssr>
 </template>
 
@@ -12,6 +12,13 @@ import ScatterPlot from '~/components/ScatterPlot.vue';
 import Statebin from '~/components/Statebin.vue';
 
 export default {
+    components: {
+        ColumnChart,
+        BarChart,
+        LineChart,
+        ScatterPlot,
+        Statebin
+    },
     data() {
         return {
             ...(this.$route && this.$route.query && this.$route.query.props ? JSON.parse(decodeURIComponent(this.$route.query.props)) : {
@@ -19,13 +26,6 @@ export default {
             }),
             graphicProps: null
         };
-    },
-    components: {
-        ColumnChart,
-        BarChart,
-        LineChart,
-        ScatterPlot,
-        Statebin
     },
     methods: {
         graphicInit(graphicProps) {

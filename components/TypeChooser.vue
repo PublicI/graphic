@@ -1,19 +1,19 @@
 <template>
     <v-container grid-list-sm>
         <v-layout row wrap>
-          <v-flex lg4 md6 sm12 v-for="type in types" :key="type.key">
-              <v-card @click="setType(type.key)" hover :color="currentType == type.key ? 'amber lighten-5' : ''">
+          <v-flex v-for="type in types" :key="type.key" lg4 md6 sm12>
+              <v-card hover :color="currentType == type.key ? 'amber lighten-5' : ''" @click="setType(type.key)">
                 <v-img
                   :src="type.img"
                   height="150px"
                   flat
                   @click="setType(type.key)"
-                ></v-img>
+                />
 
-                <v-card-title @click="setType(type.key)" primary-title>
+                <v-card-title primary-title @click="setType(type.key)">
                   <div>
-                    <h3 class="headline mb-0">{{type.name}}</h3>
-                    <div>{{type.description}}</div>
+                    <h3 class="headline mb-0">{{ type.name }}</h3>
+                    <div>{{ type.description }}</div>
                   </div>
                 </v-card-title>
 
@@ -58,14 +58,14 @@ export default {
             }]
         };
     },
-    methods: {
-        setType(type) {
-            this.$store.commit('setType', type);
-        }
-    },
     computed: {
         currentType() {
             return this.$store.state.type;
+        }
+    },
+    methods: {
+        setType(type) {
+            this.$store.commit('setType', type);
         }
     }
 };

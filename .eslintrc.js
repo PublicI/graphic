@@ -13,8 +13,12 @@ module.exports = {
     },
     // add your custom rules here
     rules: {
+        'vue/max-attributes-per-line': 'off',
+        'vue/singleline-html-element-content-newline': 'off',
+        'vue/multiline-html-element-content-newline': 'off',
+        'vue/html-closing-bracket-newline': 'off',
         'vue/require-v-for-key': ['warn'],
-        'vue/html-indent': ['warn', 4],
+        'vue/html-indent': 'off',
         'brace-style': ['warn'],
         'comma-dangle': [2, 'only-multiline'],
         'comma-spacing': ['warn'],
